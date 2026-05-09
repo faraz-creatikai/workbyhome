@@ -1,26 +1,85 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Fonts */
+  --font-sans: var(--font-sora), sans-serif;
+  --font-display: var(--font-clash), sans-serif;
+  --font-mono: var(--font-jetbrains), monospace;
+
+  /* Ink Colors */
+  --color-ink-50: #f0f0f5;
+  --color-ink-100: #e0e0ec;
+  --color-ink-200: #c2c2d9;
+  --color-ink-300: #9494bb;
+  --color-ink-400: #6666a0;
+  --color-ink-500: #3d3d7a;
+  --color-ink-600: #2e2e6e;
+  --color-ink-700: #1f1f5c;
+  --color-ink-800: #141450;
+  --color-ink-900: #0b0b40;
+  --color-ink-950: #060630;
+
+  /* Gold */
+  --color-gold-50: #fffbeb;
+  --color-gold-100: #fef3c7;
+  --color-gold-200: #fde68a;
+  --color-gold-300: #fcd34d;
+  --color-gold-400: #fbbf24;
+  --color-gold-500: #f59e0b;
+  --color-gold-600: #d97706;
+  --color-gold-700: #b45309;
+  --color-gold-800: #92400e;
+  --color-gold-900: #78350f;
+
+  /* Sage */
+  --color-sage-50: #f0fdf4;
+  --color-sage-100: #dcfce7;
+  --color-sage-200: #bbf7d0;
+  --color-sage-300: #86efac;
+  --color-sage-400: #4ade80;
+  --color-sage-500: #22c55e;
+  --color-sage-600: #16a34a;
+
+  /* Animations */
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-delayed: float 6s ease-in-out 2s infinite;
+  --animate-shimmer: shimmer 2.5s linear infinite;
+  --animate-ticker: ticker 25s linear infinite;
+  --animate-pulse-ring: pulseRing 2s ease-out infinite;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* for intigration page */
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0);
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  100% {
+    transform: translateX(-33.333%);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-33.333%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-marquee-left {
+  animation: marquee-left 25s linear infinite;
+  width: max-content;
+}
+
+.animate-marquee-right {
+  animation: marquee-right 25s linear infinite;
+  width: max-content;
+}
+
+.animate-marquee-left:hover,
+.animate-marquee-right:hover {
+  animation-play-state: paused;
 }
