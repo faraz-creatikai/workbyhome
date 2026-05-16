@@ -19,16 +19,14 @@ import {
   User,
   Briefcase,
   Globe,
-  Linkedin,
-  Twitter,
-  Facebook,
-  Instagram,
+  
   Headphones,
   Zap,
   Shield,
   Users,
   Sparkles,
 } from "lucide-react";
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa6";
 
 // ─── Types ─────────────────────────────────────────────────────────────
 
@@ -768,10 +766,10 @@ export default function ContactPage() {
                 </p>
               </div>
               <div className="flex gap-3">
-                <SocialButton icon={<Linkedin size={20} />} label="LinkedIn" />
-                <SocialButton icon={<Twitter size={20} />} label="Twitter" />
-                <SocialButton icon={<Facebook size={20} />} label="Facebook" />
-                <SocialButton icon={<Instagram size={20} />} label="Instagram" />
+                <SocialButton icon={<FaLinkedin size={20} />} label="LinkedIn" />
+                <SocialButton icon={<FaTwitter size={20} />} label="Twitter" />
+                <SocialButton icon={<FaFacebook size={20} />} label="Facebook" />
+                <SocialButton icon={<FaInstagram size={20} />} label="Instagram" />
               </div>
             </div>
           </div>
