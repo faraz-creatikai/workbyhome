@@ -36,6 +36,7 @@ import {
   Download,
   ChevronRight,
 } from "lucide-react";
+import Link from "next/link";
 
 const candidateLinks = [
   {
@@ -86,21 +87,21 @@ const employeeLinks = [
   {
     label: "Submit Job",
     icon: PlusSquare,
-    href: "#submit-job",
+    href: "/for-employee/submit-jobs",
     desc: "Post your job in minutes",
     color: "bg-violet-50 text-violet-600",
   },
   {
     label: "Add Company",
     icon: Building2,
-    href: "#add-company",
+    href: "/for-employee/add-company",
     desc: "Build your employer brand",
     color: "bg-emerald-50 text-emerald-600",
   },
   {
     label: "Employer Dashboard",
     icon: LayoutDashboard,
-    href: "#employer-dashboard",
+    href: "/for-employee/employee-dashboard",
     desc: "Track postings & candidates",
     color: "bg-amber-50 text-amber-600",
   },
@@ -181,10 +182,11 @@ function DropdownMenu({ links, label, isOpen }: {
               {links.map((link) => {
                 const Icon = link.icon;
                 return (
-                  <motion.a
-                    key={link.label}
+                  <motion.div    key={link.label} variants={itemVariants}>
+                  <Link
+                 
                     href={link.href}
-                    variants={itemVariants}
+                  
                     className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 transition-colors group"
                   >
                     <div
@@ -201,14 +203,15 @@ function DropdownMenu({ links, label, isOpen }: {
                       </p>
                     </div>
                     <ChevronRight className="w-3.5 h-3.5 text-gray-300 group-hover:text-blue-400 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
-                  </motion.a>
+                  </Link>
+                  </motion.div>
                 );
               })}
             </div>
 
             {/* Footer CTA */}
             <div className="px-4 py-3 bg-gray-50 border-t border-gray-100">
-              <a
+              <Link
                 href="#"
                 className={`flex items-center justify-center gap-2 w-full py-2 rounded-xl text-[13px] font-semibold transition-all ${
                   isCandidate
@@ -218,7 +221,7 @@ function DropdownMenu({ links, label, isOpen }: {
               >
                 {isCandidate ? "Create Free Account" : "Start Hiring Today"}
                 <ArrowRight className="w-3.5 h-3.5" />
-              </a>
+              </Link>
             </div>
           </div>
         </motion.div>
@@ -264,8 +267,8 @@ const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
       icon: Users,
       submenu: employeeLinks,
     },
-    { label: "News", href: "#news", icon: Newspaper },
-    { label: "Contact", href: "#contact", icon: Phone },
+    { label: "News", href: "/news", icon: Newspaper },
+    { label: "Contact", href: "/contact", icon: Phone },
     { label: "Download", href: "#download", icon: Download },
   ];
 
@@ -283,14 +286,14 @@ const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2.5 group flex-shrink-0">
+          <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center group-hover:shadow-blue-600/30 transition-shadow">
               <img src="/workbyhome.png" className="text-white" alt="Logo" />
             </div>
             <span className="text-2xl font-extrabold text-gray-900 tracking-tight">
               Work<span className="text-blue-600">By</span>Home
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-1">
@@ -306,7 +309,7 @@ const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
                   onMouseEnter={() => hasSubmenu && handleMouseEnter(link.label)}
                   onMouseLeave={handleMouseLeave}
                 >
-                  <a
+                  <Link
                     href={link.href}
                     className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 group ${
                       isOpen
@@ -333,7 +336,7 @@ const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
                         />
                       </motion.span>
                     )}
-                  </a>
+                  </Link>
 
                   {hasSubmenu && (
                     <DropdownMenu
@@ -426,7 +429,7 @@ const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
                           {link.submenu.map((sub) => {
                             const SubIcon = sub.icon;
                             return (
-                              <a
+                              <Link
                                 key={sub.label}
                                 href={sub.href}
                                 onClick={() => setMobileOpen(false)}
@@ -438,7 +441,7 @@ const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
                                   <SubIcon className="w-3.5 h-3.5" />
                                 </div>
                                 <span className="font-medium">{sub.label}</span>
-                              </a>
+                              </Link>
                             );
                           })}
                         </motion.div>
