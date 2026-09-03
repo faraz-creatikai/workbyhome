@@ -1,0 +1,240 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model DemoRequest {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  phone     String
+  message   String?  @db.VarChar(2000)
+  status    String   @default("pending")
+  source    String   @default("chatbot")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+  @@map("demo_requests")
+}
+
+model Contact {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String   @db.VarChar(2000)
+  createdAt DateTime @default(now())
+}
+
+model ContactSupport {
+  id            String   @id @default(cuid())
+  name          String
+  email         String
+  subject       String
+  message       String   @db.VarChar(2000)
+  inquiryType   String?  @db.VarChar(255)
+  priority      String?  @db.VarChar(100)
+  supportMethod String?  @db.VarChar(100)
+  preferredTime String?  @db.VarChar(100)
+  createdAt     DateTime @default(now())
+}
+
+model SeoEntry {
+  id                 String   @id @default(uuid())
+  pageName           String
+  slug               String   @unique
+  url                String   @unique
+  metaTitle          String
+  metaDescription    String   @db.VarChar(1000)
+  keywords           String   @db.VarChar(1000) // Stored as JSON string array
+  canonicalUrl       String?  @db.VarChar(500)
+  ogTitle            String?  @db.VarChar(255)
+  ogDescription      String?  @db.VarChar(1000)
+  ogImage            String?  @db.VarChar(500)
+  twitterTitle       String?  @db.VarChar(255)
+  twitterDescription String?  @db.VarChar(1000)
+  twitterImage       String?  @db.VarChar(500)
+  seoScore           Int      @default(0)
+  status             Status   @default(draft)
+  indexable          Boolean  @default(true)
+  lastModified       DateTime @updatedAt
+  createdAt          DateTime @default(now())
+
+  @@index([status])
+  @@index([seoScore])
+  @@map("seo_entries")
+}
+
+model Login {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+}
+
+model Subscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+model Candidate {
+  id             String   @id @default(uuid())
+  name           String
+  image          String?
+  currentCompany String   @default("")
+  role           String
+  location       String   @default("")
+  description    String   @default("") @db.VarChar(2000)
+  email          String
+  phone          String   @default("")
+  experience     String   @default("")
+  expectedSalary String   @default("")
+  resumeUrl      String?
+  skills         Json
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([createdAt])
+  @@index([name])
+  @@map("candidates")
+}
+
+model Company {
+  id            String   @id @default(cuid())
+  name          String
+  logo          String?
+  industry      String   @default("")
+  companySize   String   @default("") // e.g. "1-10", "11-50", "51-200", "201-500", "500+"
+  location      String   @default("")
+  description   String   @default("") @db.VarChar(2000)
+  email         String
+  phone         String   @default("")
+  website       String?
+  foundedYear   String   @default("")
+  openPositions Int      @default(0)
+  benefits      Json // stored as an array of strings, e.g. ["Remote work", "Health insurance"]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([createdAt])
+  @@index([name])
+  @@map("companies")
+}
+
+model Resume {
+  id String @id @default(cuid())
+
+  // Personal
+  firstName    String
+  lastName     String
+  email        String
+  phone        String  @default("")
+  location     String
+  profilePhoto String? // uploaded file path, e.g. /uploads/photos/xyz.jpg
+
+  // Professional
+  jobTitle     String
+  category     String
+  experience   String
+  workType     Json // string[]
+  availability String @default("")
+  salaryMin    String @default("")
+  salaryMax    String @default("")
+
+  // Skills & Resume
+  skills         Json // string[]
+  languages      Json // string[]
+  resumeUrl      String // uploaded file path, e.g. /uploads/resumes/xyz.pdf
+  resumeFileName String @default("")
+  bio            String @default("") @db.VarChar(2000)
+
+  // Links & visibility
+  portfolio  String @default("")
+  linkedin   String @default("")
+  github     String @default("")
+  twitter    String @default("")
+  website    String @default("")
+  visibility String @default("recruiters") // "public" | "private" | "recruiters"
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([createdAt])
+  @@index([email])
+  @@map("resumes")
+}
+
+model Requirement {
+  id              String  @id @default(cuid())
+  requirementType String // hiring | seeking
+  jobType         String // full-time | part-time | contract | internship | freelance
+  jobRole         String
+  city            String
+  location        String
+  minSalary       Int
+  maxSalary       Int
+  name            String
+  contactNumber   String
+  email           String
+  description     String?
+
+  createdAt DateTime @default(now())
+}
+
+model CandidateApplication {
+  id             String  @id @default(uuid())
+  fullName       String
+  email          String
+  phone          String
+  currentCompany String?
+  currentRole    String
+  experience     String
+  expectedSalary String?
+  location       String
+  skills         String  @default("[]") // JSON array as string
+  description    String  @db.Text
+  resumeUrl      String? // URL to stored resume file
+
+  status ApplicationStatus @default(pending)
+
+  submittedAt     DateTime  @default(now())
+  reviewedAt      DateTime?
+  reviewedBy      String?
+  rejectionReason String?   @db.Text
+
+  @@index([status])
+  @@index([email])
+  @@index([submittedAt])
+  @@map("candidate_applications")
+}
+
+enum ApplicationStatus {
+  pending
+  approved
+  rejected
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum Status {
+  published
+  draft
+}

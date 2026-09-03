@@ -1,5 +1,7 @@
 "use client"
 
+import Link from "next/link";
+
  export default function HeroSection() {
     return (
       <div className="min-h-screen bg-[#fafafa] relative overflow-hidden font-sans text-slate-900 selection:bg-blue-100">
@@ -39,9 +41,9 @@
             <p className="text-lg sm:text-xl text-gray-500 mb-10 max-w-2xl mx-auto font-medium">
               Efficiently manage your tasks and boost productivity.
             </p>
-            <button className="px-8 py-4 rounded-full bg-[#1A73E8] text-white text-lg font-medium hover:bg-blue-600 transition-all shadow-[0_10px_30px_-10px_rgba(26,115,232,0.5)] transform hover:-translate-y-0.5">
+            <Link href="/apply-now" className="px-8 py-4 rounded-full bg-[#1A73E8] text-white text-lg font-medium hover:bg-blue-600 transition-all shadow-[0_10px_30px_-10px_rgba(26,115,232,0.5)] transform hover:-translate-y-0.5">
               Get free demo
-            </button>
+            </Link>
           </div>
   
           {/* --- FLOATING DECORATIVE ELEMENTS --- */}
