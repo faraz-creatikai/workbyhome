@@ -37,6 +37,7 @@ import {
   ChevronRight,
   LucideIcon,
   Contact,
+  Database,
 } from "lucide-react";
 import Link from "next/link";
 import { GrResources } from "react-icons/gr";
@@ -261,87 +262,85 @@ const resourcesLinks: SubLink[] = [
   }, */
 ];
 
-// ── PLANNED — Solutions by industry. Uncomment + wire into navLinks below when pages exist ──
+// ── Solutions by Use Case (AI Virtual Calling) ──
 
 const solutionsLinks: SubLink[] = [
   {
-    label: "Real Estate",
-    icon: Building2,
-    href: "/solutions/real-estate",
-    desc: "Property matching & buyer follow-up on autopilot",
+    label: "Virtual Receptionist",
+    icon: Phone,
+    href: "/solutions/virtual-receptionist",
+    desc: "24/7 automated call answering for your remote business",
     color: "bg-blue-50 text-blue-600",
   },
   {
-    label: "Sales & Marketing Teams",
+    label: "Outbound Lead Gen",
     icon: TrendingUp,
-    href: "/solutions/sales-marketing",
-    desc: "Automate lead qualification & outreach",
+    href: "/solutions/lead-generation",
+    desc: "AI cold calling to qualify leads on autopilot",
     color: "bg-violet-50 text-violet-600",
   },
   {
-    label: "Call Centers / BPOs",
-    icon: Phone,
-    href: "/solutions/call-centers",
-    desc: "Scale calling operations with AI",
+    label: "Inbound Support",
+    icon: Heart,
+    href: "/solutions/inbound-support",
+    desc: "Resolve customer FAQs instantly without human agents",
     color: "bg-emerald-50 text-emerald-600",
   },
   {
-    label: "Insurance",
-    icon: Shield,
-    href: "/solutions/insurance",
-    desc: "Automate claims follow-up & lead capture",
+    label: "Appointment Booking",
+    icon: Clock,
+    href: "/solutions/appointment-booking",
+    desc: "Automated scheduling synced with your calendar",
     color: "bg-amber-50 text-amber-600",
   },
   {
-    label: "E-commerce",
-    icon: Globe,
-    href: "/solutions/ecommerce",
-    desc: "Recover carts & qualify leads automatically",
+    label: "Remote Call Center",
+    icon: Users,
+    href: "/solutions/remote-call-center",
+    desc: "Scale your calling operations instantly with AI agents",
     color: "bg-rose-50 text-rose-600",
   },
   {
-    label: "Healthcare / Clinics",
-    icon: Heart,
-    href: "/solutions/healthcare",
-    desc: "Automate appointment reminders & intake calls",
+    label: "Automated Follow-ups",
+    icon: Bell,
+    href: "/solutions/automated-follow-ups",
+    desc: "Never miss a beat with AI-driven contact cadences",
     color: "bg-blue-50 text-blue-600",
   },
 ];
 
-
-// ── PLANNED — Platform (CRM, automation, integrations, analytics). Uncomment + wire in when ready ──
+// ── Platform Features (AI Core Tech & Integrations) ──
 
 const platformLinks: SubLink[] = [
   {
-    label: "CRM & Data Management",
-    icon: LayoutDashboard,
-    href: "/platform/crm",
-    desc: "Manage every contact your calling team touches",
+    label: "AI Voice Builder",
+    icon: LayoutGrid,
+    href: "/platform/voice-builder",
+    desc: "Drag-and-drop tool to design custom call scripts",
     color: "bg-blue-50 text-blue-600",
   },
-  {
-    label: "Call Automation / Workflows",
-    icon: Zap,
-    href: "/platform/call-automation",
-    desc: "Script, route, and log calls automatically",
-    color: "bg-violet-50 text-violet-600",
-  },
-  {
-    label: "Integrations",
-    icon: Globe,
-    href: "/platform/integrations",
-    desc: "Connect telephony, CRM, Slack & WhatsApp",
+{
+    label: "Knowledge & Context Engine",
+    icon: Database,
+    href: "/platform/knowledge-engine",
+    desc: "Sync PDFs, URLs, and CRM data to give your AI perfect memory",
     color: "bg-emerald-50 text-emerald-600",
   },
   {
-    label: "Analytics & Reporting",
-    icon: TrendingUp,
+    label: "Live Transcripts & Analytics",
+    icon: FileText,
     href: "/platform/analytics",
-    desc: "Track call outcomes & conversion",
+    desc: "Real-time call monitoring, recording, and insights",
+    color: "bg-emerald-50 text-emerald-600",
+  },
+  {
+    label: "CRM & Integrations",
+    icon: Zap,
+    href: "/platform/integrations",
+    desc: "Connect seamlessly with the tools you already use",
     color: "bg-amber-50 text-amber-600",
   },
 ];
-
 
 // ── PLANNED — Company. Uncomment + wire in when ready ──
 
