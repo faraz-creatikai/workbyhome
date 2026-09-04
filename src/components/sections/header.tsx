@@ -344,7 +344,7 @@ const platformLinks: SubLink[] = [
 
 
 // ── PLANNED — Company. Uncomment + wire in when ready ──
-/*
+
 const companyLinks: SubLink[] = [
   {
     label: "About Us",
@@ -368,7 +368,7 @@ const companyLinks: SubLink[] = [
     color: "bg-emerald-50 text-emerald-600",
   },
 ];
-*/
+
 
 const dropdownVariants: Variants = {
   hidden: {
