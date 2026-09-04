@@ -55,20 +55,21 @@ type SubLink = {
 };
 
 const candidateLinks: SubLink[] = [
-  {
+  // ── Public job browsing — commented out per new direction, this is not a job marketplace ──
+  /* {
     label: "Browse Jobs",
     icon: Search,
     href: "/for-candidate/browse-jobs",
     desc: "Explore thousands of remote opportunities",
     color: "bg-blue-50 text-blue-600",
-  },
-  {
+  }, */
+  /* {
     label: "Browse Companies",
     icon: Building2,
     href: "/for-candidate/browse-companies",
     desc: "Discover top companies hiring now",
     color: "bg-violet-50 text-violet-600",
-  },
+  }, */
   /*   {
       label: "Browse Categories",
       icon: LayoutGrid,
@@ -229,7 +230,145 @@ const resourcesLinks: SubLink[] = [
     href: "/contact-us",
     color: "bg-rose-50 text-rose-600",
   },
+  // ── PLANNED — uncomment and build pages when ready ──
+  /* {
+    label: "Blog / News",
+    icon: Newspaper,
+    href: "/resources/blog",
+    desc: "Product updates & industry news",
+    color: "bg-blue-50 text-blue-600",
+  }, */
+  /* {
+    label: "Case Studies",
+    icon: Star,
+    href: "/resources/case-studies",
+    desc: "How teams use our AI agents to convert more leads",
+    color: "bg-violet-50 text-violet-600",
+  }, */
+  /* {
+    label: "FAQs",
+    icon: CheckCircle2,
+    href: "/resources/faqs",
+    desc: "Common questions, answered",
+    color: "bg-emerald-50 text-emerald-600",
+  }, */
+  /* {
+    label: "API Docs",
+    icon: FileText,
+    href: "/resources/api-docs",
+    desc: "Integrate our AI agents into your stack",
+    color: "bg-amber-50 text-amber-600",
+  }, */
 ];
+
+// ── PLANNED — Solutions by industry. Uncomment + wire into navLinks below when pages exist ──
+
+const solutionsLinks: SubLink[] = [
+  {
+    label: "Real Estate",
+    icon: Building2,
+    href: "/solutions/real-estate",
+    desc: "Property matching & buyer follow-up on autopilot",
+    color: "bg-blue-50 text-blue-600",
+  },
+  {
+    label: "Sales & Marketing Teams",
+    icon: TrendingUp,
+    href: "/solutions/sales-marketing",
+    desc: "Automate lead qualification & outreach",
+    color: "bg-violet-50 text-violet-600",
+  },
+  {
+    label: "Call Centers / BPOs",
+    icon: Phone,
+    href: "/solutions/call-centers",
+    desc: "Scale calling operations with AI",
+    color: "bg-emerald-50 text-emerald-600",
+  },
+  {
+    label: "Insurance",
+    icon: Shield,
+    href: "/solutions/insurance",
+    desc: "Automate claims follow-up & lead capture",
+    color: "bg-amber-50 text-amber-600",
+  },
+  {
+    label: "E-commerce",
+    icon: Globe,
+    href: "/solutions/ecommerce",
+    desc: "Recover carts & qualify leads automatically",
+    color: "bg-rose-50 text-rose-600",
+  },
+  {
+    label: "Healthcare / Clinics",
+    icon: Heart,
+    href: "/solutions/healthcare",
+    desc: "Automate appointment reminders & intake calls",
+    color: "bg-blue-50 text-blue-600",
+  },
+];
+
+
+// ── PLANNED — Platform (CRM, automation, integrations, analytics). Uncomment + wire in when ready ──
+
+const platformLinks: SubLink[] = [
+  {
+    label: "CRM & Data Management",
+    icon: LayoutDashboard,
+    href: "/platform/crm",
+    desc: "Manage every contact your calling team touches",
+    color: "bg-blue-50 text-blue-600",
+  },
+  {
+    label: "Call Automation / Workflows",
+    icon: Zap,
+    href: "/platform/call-automation",
+    desc: "Script, route, and log calls automatically",
+    color: "bg-violet-50 text-violet-600",
+  },
+  {
+    label: "Integrations",
+    icon: Globe,
+    href: "/platform/integrations",
+    desc: "Connect telephony, CRM, Slack & WhatsApp",
+    color: "bg-emerald-50 text-emerald-600",
+  },
+  {
+    label: "Analytics & Reporting",
+    icon: TrendingUp,
+    href: "/platform/analytics",
+    desc: "Track call outcomes & conversion",
+    color: "bg-amber-50 text-amber-600",
+  },
+];
+
+
+// ── PLANNED — Company. Uncomment + wire in when ready ──
+/*
+const companyLinks: SubLink[] = [
+  {
+    label: "About Us",
+    icon: Users,
+    href: "/resources/about-us",
+    desc: "Who we are",
+    color: "bg-blue-50 text-blue-600",
+  },
+  {
+    label: "Press / Media",
+    icon: Newspaper,
+    href: "/company/press",
+    desc: "News & media coverage",
+    color: "bg-violet-50 text-violet-600",
+  },
+  {
+    label: "Contact",
+    icon: Phone,
+    href: "/contact-us",
+    desc: "Get in touch",
+    color: "bg-emerald-50 text-emerald-600",
+  },
+];
+*/
 
 const dropdownVariants: Variants = {
   hidden: {
@@ -432,12 +571,27 @@ export default function Navbar() {
       icon: FaRobot,
       submenu: aiagentsLinks,
     },
+        // ── PLANNED — uncomment once solutionsLinks / platformLinks / companyLinks
+    // arrays above are uncommented and their pages exist ──
     {
+      label: "Solutions",
+      href: "#",
+      icon: Building2,
+      submenu: solutionsLinks,
+    },
+        {
+      label: "Platform",
+      href: "#",
+      icon: LayoutDashboard,
+      submenu: platformLinks,
+    },
+/*     {
       label: "For Candidate",
       href: "#",
       icon: Briefcase,
       submenu: candidateLinks,
-    },
+    }, */
+
     /*   {
         label: "For Employee",
         href: "#",
@@ -455,6 +609,19 @@ export default function Navbar() {
       href: "/apply-now",
       icon: MdAddTask,
     },
+
+
+    /* {
+      label: "Pricing",
+      href: "/pricing",
+      icon: DollarSign,
+    }, */
+    /* {
+      label: "Company",
+      href: "#",
+      icon: Users,
+      submenu: companyLinks,
+    }, */
     /*   { label: "News", href: "/news", icon: Newspaper }, */
     /*   { label: "Contact", href: "/contact", icon: Phone }, */
     /*  { label: "Download", href: "#download", icon: Download }, */
@@ -542,8 +709,8 @@ export default function Navbar() {
             {/* <Link href={"/apply-now"} className="text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded-xl shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 transition-all hover:-translate-y-0.5">
               Apply Now
             </Link> */}
-            <Link href={"/add-job"} className="text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded-xl shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 transition-all hover:-translate-y-0.5">
-              Post a Job
+            <Link href={"/for-candidate/submit-resume"} className="text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded-xl shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 transition-all hover:-translate-y-0.5">
+              Submit Resume
             </Link>
             <Link href={"https://wbh.ibigdata.in/register"} className="text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded-xl shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 transition-all hover:-translate-y-0.5">
               Sign In
