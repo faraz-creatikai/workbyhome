@@ -1,22 +1,14 @@
-import CrmImagePage from "@/components/sections/home/crmImgSection";
-import HeroSection from "@/components/sections/home/hero";
-import IntegrationsSection from "@/components/sections/home/integrationsSection";
-import PricingPage from "@/components/sections/home/pricing";
-import RecentJobsPage from "@/components/sections/home/recentjobs";
-import StatsSection from "@/components/sections/home/stats";
-import TestimonialsSection from "@/components/sections/home/testimonials";
-import Image from "next/image";
+import HomePage from '@/components/sections/home/HomePage';
+import React from 'react'
+import { generateSEOMetadata } from '../../lib/seometadata';
 
-export default function Home() {
-  return (
-   <div>
-    <HeroSection/>
-    <StatsSection/>
-    <RecentJobsPage/>
-    <CrmImagePage/>
-    <IntegrationsSection/>
-    <TestimonialsSection/>
-    <PricingPage/>
-   </div>
-  );
+
+
+
+
+
+export const generateMetadata = generateSEOMetadata;
+
+export default function page() {
+  return <HomePage/>
 }

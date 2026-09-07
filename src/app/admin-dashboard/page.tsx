@@ -4,7 +4,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import {
   Search, Plus, Edit3, Trash2, CheckCircle, AlertCircle, FileText,
   Layout, Settings, X, Upload, Download, Filter, BarChart3, Users,
-  Shield, Zap, Eye, Loader2, Globe, Save, Menu, ChevronDown, ChevronUp
+  Shield, Zap, Eye, Loader2, Globe, Save, Menu, ChevronDown, ChevronUp,
+  Contact
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { LogOut } from 'lucide-react';
@@ -17,6 +18,7 @@ import CandidateApplicationsAdmin from '@/components/join-broker-network/joinNet
 import CompaniesPage from '@/components/companies-page/page';
 import { SiReactiveresume } from 'react-icons/si';
 import ResumesAdminPage from '@/components/resumes/page';
+import ContactMessagesAdmin from '@/components/getContactMessage/getContactMessage';
 // ── Types (untouched) ────────────────────────────────────────────────────────
 interface SEOEntry {
   id: string;
@@ -322,6 +324,7 @@ export default function SEODashboard() {
   const [entries, setEntries] = useState<SEOEntry[]>([]);
   const [stats, setStats] = useState<Stats>({ avgScore: 0, published: 0, needsAttention: 0, total: 0, totalKeywords: 0 });
   const [brokerCount, setBrokerCount] = useState(0);
+  const [contactCount, setContactCount] = useState(0);
   const [selectedEntry, setSelectedEntry] = useState<SEOEntry | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreateMode, setIsCreateMode] = useState(false);
@@ -501,8 +504,20 @@ export default function SEODashboard() {
       console.error(err);
     }
   };
+
+  const loadContactStats = async () => {
+    try {
+      const res = await fetch("/api/contact"); //  contact API
+      const data = await res.json();
+//console.log(" data is ",data.messages)
+      setContactCount(data.messages.length); // or data.total if you return it
+    } catch (err) {
+      console.error(err);
+    }
+  };
   useEffect(() => {
     loadBrokerStats();
+    loadContactStats();
   }, []);
   const calculatePreviewScore = (entry: Partial<SEOEntry>): number => {
     let score = 0;
@@ -521,11 +536,16 @@ export default function SEODashboard() {
   const navItems = [
     { id: 'dashboard', icon: Layout, label: 'Dashboard' },
     { id: 'seo', icon: Search, label: 'SEO Manager', badge: stats.total },
-    { id: 'explore', icon: Search, label: 'Candidate Manager', badge: brokerCount },
-    { id: 'companies', icon: Users, label: 'Company Manager' },
-    { id: 'requirement', icon: Users, label: 'Added Requirements' },
+ 
+     { id: 'contact', icon: Contact, label: 'Contact Messages', badge: contactCount },
+    
      { id: 'resumes', icon: SiReactiveresume, label: 'Resumes' },
-    { id: 'joinNetwork', icon: Users, label: 'Candidate Request Manager' },
+     { id: 'joinNetwork', icon: Users, label: 'Candidate Request Manager' },
+
+    /*     { id: 'explore', icon: Search, label: 'Candidate Manager', badge: brokerCount },
+    { id: 'companies', icon: Users, label: 'Company Manager' },
+    { id: 'requirement', icon: Users, label: 'Added Requirements' }, */
+    
 
     { id: 'settings', icon: Settings, label: 'Settings' },
   ];
@@ -930,6 +950,7 @@ export default function SEODashboard() {
         {activeSidebarItem === "requirement" && <RequirementsPage />}
         {activeSidebarItem === "companies" && <CompaniesPage />}
         {activeSidebarItem === "joinNetwork" && <CandidateApplicationsAdmin />}
+         {activeSidebarItem === "contact" && <ContactMessagesAdmin />}
       </main>
 
       {/* Modal */}

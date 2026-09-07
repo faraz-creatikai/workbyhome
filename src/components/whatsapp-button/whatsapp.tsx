@@ -18,7 +18,10 @@ import {
   Star,
   Zap,
   Sparkles,
-  Info
+  Info,
+  Globe,
+  Headphones,
+  PhoneCall
 } from 'lucide-react'
 
 type Message = {
@@ -33,17 +36,17 @@ type Message = {
 
 // Quick-action keycaps — the four things people actually come to a coworking chat for
 const QUICK_REPLIES = [
-  { icon: Calendar, text: "Book a tour" },
-  { icon: Zap, text: "Day pass pricing" },
-  { icon: MapPin, text: "Find a location" },
-  { icon: Sparkles, text: "Membership plans" },
-  { icon: MessageCircle, text: "Talk to our team" },
+  { icon: Calendar, text: "Book a demo" },
+  { icon: Zap, text: "View pricing" },
+  { icon: Sparkles, text: "Voice library" },
+  { icon: Building2, text: "Integrations" },
+  { icon: MessageCircle, text: "Talk to sales" },
 ]
 
 const WELCOME_MESSAGE: Message = {
   id: 'welcome',
   type: 'bot',
-  text: "Hey, I'm Maya — your WorkByHome concierge.\n\nNeed a desk for the day, a private office, or a home base for your whole team? I can help you find the right space in seconds.\n\nWhat can I help with?",
+  text: "Hey, I'm Maya — your WorkByHome concierge.\n\nNeed a 24/7 virtual receptionist, an outbound sales dialer, or a custom AI voice agent? I can help you automate your phone lines in seconds.\n\nWhat can I help with?",
   time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
   quickReplies: true,
   showForm: false
@@ -51,13 +54,13 @@ const WELCOME_MESSAGE: Message = {
 
 // Condensed stat chips — replaces the old static sidebar
 const INFO_CHIPS = [
-  { icon: Building2, label: "120+ locations" },
-  { icon: Clock, label: "24/7 access" },
-  { icon: Wifi, label: "Gig-speed wifi" },
-  { icon: Users, label: "5,000+ members" },
+  { icon: Clock, label: "24/7 answering" },
+  { icon: Zap, label: "0s hold times" },
+  { icon: Users, label: "Human handoff" },
+  { icon: Building2, label: "CRM integrations" },
 ]
 
-const NETWORK_CITIES = ["Austin", "Denver", "Chicago", "Miami", "Seattle", "+115 more"]
+const NETWORK_CITIES = ["English", "Spanish", "French", "German", "Mandarin", "+35 more"]
 
 export default function WorkByHomeChatbot() {
   const [isOpen, setIsOpen] = useState(false)
@@ -105,6 +108,9 @@ export default function WorkByHomeChatbot() {
   const handleSendMessage = async (text: string = inputText) => {
     if (!text.trim()) return;
 
+    // Hardcode keyword detection to bypass AI JSON issues
+    const isEnquiryIntent = /demo|pricing|voice|integrate|contact|sales/i.test(text);
+
     const userMessage: Message = {
       id: Date.now().toString(),
       type: "user",
@@ -135,22 +141,36 @@ export default function WorkByHomeChatbot() {
       });
 
       const data = await res.json();
+      
+      // Safety cleaner: If the AI leaked raw JSON into the text, strip it out cleanly
+      let cleanText = data.aiMessage || "I'd be happy to help! Please provide your details below.";
+      cleanText = cleanText.replace(/```json[\s\S]*?```/gi, ''); // Remove markdown json blocks
+      cleanText = cleanText.replace(/\{[\s\S]*"formFields"[\s\S]*\}/gi, ''); // Remove raw braces containing formFields
+      cleanText = cleanText.replace(/\{[\s\S]*"aiMessage"[\s\S]*\}/gi, ''); // Remove raw braces containing aiMessage
+      cleanText = cleanText.trim();
+
+      // Determine if form should show: Either backend flagged it, OR our hardcoded keywords caught it
+      const shouldShowForm = data.isDemo || isEnquiryIntent;
 
       const botMessageId = (Date.now() + 1).toString();
       const botMessage: Message = {
         id: botMessageId,
         type: "bot",
-        text: data.aiMessage || "I apologize, I couldn't process that request.",
+        text: cleanText || "Let's get that setup for you.",
         time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         quickReplies: true,
-        showForm: data.isDemo || false
+        showForm: shouldShowForm
       };
 
       setMessages((prev) => [...prev, botMessage]);
 
-      if (data.isDemo) {
+      if (shouldShowForm) {
         setActiveFormMessageId(botMessageId);
-        setFormFields(data.formFields || ["name", "email", "phone", "location", "message"]);
+        // Ensure fields are set even if backend failed to provide them
+        setFormFields(data.formFields && data.formFields.length > 0 
+          ? data.formFields 
+          : ["name", "email", "phone", "location", "message"]
+        );
       }
     } catch (error) {
       console.error(error);
@@ -183,21 +203,29 @@ export default function WorkByHomeChatbot() {
     }
 
     try {
-      const res = await fetch("/api/demo", {
+      // Format chatbot fields to match your Contact API (which expects name, email, description)
+      const combinedDescription = `Phone: ${phone}\nLocation: ${location || 'N/A'}\nMessage: ${description || 'N/A'}`;
+
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, location, description }),
+        body: JSON.stringify({ 
+          name, 
+          email, 
+          description: combinedDescription 
+        }),
       });
 
       const data = await res.json();
 
-      if (!data.success) {
+      // Changed !data.success to !res.ok to match your Contact API's behavior
+      if (!res.ok) {
         setMessages((prev) => [
           ...prev,
           {
             id: Date.now().toString(),
             type: "bot",
-            text: `${data.error || "Failed to submit your tour request. Please try again."}`,
+            text: `${data.error || "Failed to submit your request. Please try again."}`,
             time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
             quickReplies: true,
             showForm: false
@@ -211,7 +239,7 @@ export default function WorkByHomeChatbot() {
         {
           id: Date.now().toString(),
           type: "bot",
-          text: "Your tour is booked.\n\nCheck your email for location details and directions.\n\nA member of our team will confirm your time within 24 hours.",
+          text: "Your details have been sent! 🚀\n\nA member of our team will contact you within 24 hours with next steps.",
           time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
           quickReplies: true,
           showForm: false
@@ -243,7 +271,7 @@ export default function WorkByHomeChatbot() {
 
   const openWhatsApp = () => {
     const phone = "15551234567"
-    const message = encodeURIComponent("Hi! I've been chatting with the WorkByHome assistant and have a few questions about your spaces.")
+    const message = encodeURIComponent("Hi! I've been chatting with the WorkByHome assistant and have a few questions about your AI calling platform.")
     window.open(`https://wa.me/${phone}?text=${message}`, '_blank')
   }
 
@@ -257,11 +285,12 @@ export default function WorkByHomeChatbot() {
       >
         <button
           onClick={handleOpen}
-          className="group relative flex items-center gap-3 pl-3 pr-5 py-3 bg-[#0066cc] rounded-full shadow-[0_10px_30px_rgba(0,102,204,0.45)] hover:shadow-[0_14px_36px_rgba(0,102,204,0.55)] hover:bg-[#0052a3] transition-all duration-200 hover:-translate-y-0.5"
+          className="group relative flex items-center cursor-pointer gap-3 pl-3 pr-5 py-3 bg-[#0066cc] rounded-full shadow-[0_10px_30px_rgba(0,102,204,0.45)] hover:shadow-[0_14px_36px_rgba(0,102,204,0.55)] hover:bg-[#0052a3] transition-all duration-200 hover:-translate-y-0.5"
         >
-          <span className="relative flex-shrink-0 w-9 h-9 rounded-full bg-white/15 flex items-center justify-center">
-            <Coffee className="w-4.5 h-4.5 text-white" />
-            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-[#0066cc]" />
+          <span className="relative flex-shrink-0 w-10 h-10 rounded-full  flex items-center justify-center">
+           {/*  <Coffee className="w-4.5 h-4.5 text-white" />
+            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-[#0066cc]" /> */}
+            <img src="/workbyhome.png"/>
           </span>
           <span className="text-white font-semibold text-sm leading-tight text-left">
             Ask Maya
@@ -293,9 +322,10 @@ export default function WorkByHomeChatbot() {
         <div className="bg-gradient-to-r from-[#0066cc] to-[#0052a3] px-4 pt-4 pb-3 text-white flex-shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="relative w-10 h-10 rounded-full bg-white/15 flex items-center justify-center border border-white/20">
-                <Coffee className="w-5 h-5 text-white" />
-                <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[#0052a3]" />
+              <div className="relative w-10 h-10 rounded-full  flex items-center justify-center ">
+                 <img src="/workbyhome.png"/>
+               {/*  <Coffee className="w-5 h-5 text-white" />
+                <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[#0052a3]" /> */}
               </div>
               <div>
                 <h3 className="font-bold text-sm leading-tight">Maya</h3>
@@ -340,7 +370,7 @@ export default function WorkByHomeChatbot() {
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse flex-shrink-0" />
-            <span className="text-[10px] uppercase tracking-wider text-slate-400 font-mono flex-shrink-0">Live network</span>
+            <span className="text-[10px] uppercase tracking-wider text-slate-400 font-mono flex-shrink-0">Supported Languages</span>
             {NETWORK_CITIES.map((city) => (
               <span key={city} className="text-[11px] text-slate-600 bg-white border border-slate-200 rounded-full px-2.5 py-0.5 flex-shrink-0">
                 {city}
@@ -350,14 +380,15 @@ export default function WorkByHomeChatbot() {
         )}
 
         {/* ===== Messages ===== */}
-        <div className="flex-1 overflow-y-auto px-3 py-4 space-y-3 bg-slate-50">
+        <div className="flex-1 overflow-y-auto px-3 py-4 space-y-4 bg-slate-50">
           {messages.map((msg) => (
             <div key={msg.id}>
               <div className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`flex items-end gap-2 max-w-[86%] ${msg.type === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
                   {msg.type === 'bot' && (
-                    <div className="w-7 h-7 rounded-full bg-[#0066cc] flex items-center justify-center flex-shrink-0 mb-1">
-                      <Coffee className="w-3.5 h-3.5 text-white" />
+                    <div className="w-8 h-8 rounded-full bg-[#0066cc] flex items-center justify-center flex-shrink-0 mb-1">
+                      {/* <Coffee className="w-3.5 h-3.5 text-white" /> */}
+                      <img src="/workbyhome.png" alt="WorkbyHome" className=" w-full h-full object-cover" />
                     </div>
                   )}
 
@@ -387,70 +418,73 @@ export default function WorkByHomeChatbot() {
                     {[...Array(5)].map((_, i) => <Star key={i} className="w-2.5 h-2.5 fill-amber-500" />)}
                   </div>
                   <p className="text-[11px] text-amber-800 leading-snug">
-                    Booked a desk in a new city in two minutes flat, no lease, no hassle.
-                    <span className="text-amber-600 font-medium"> — Priya M., Austin</span>
+                    Deployed our AI receptionist in 10 minutes flat, no coding, no hassle.
+                    <span className="text-amber-600 font-medium"> — Priya M., Sales Director</span>
                   </p>
                 </div>
               )}
 
-              {/* Tour booking form, attached to the message that triggered it */}
+              {/* BRAND NEW PREMIUM FORM UI */}
               {msg.type === 'bot' && activeFormMessageId === msg.id && (
-                <div className="ml-9 mt-2 max-w-[86%] bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-                  <div className="bg-slate-900 px-4 py-2.5 flex items-center gap-2">
-                    <Calendar className="w-3.5 h-3.5 text-blue-300" />
-                    <span className="text-white text-xs font-bold tracking-wide">BOOK A TOUR</span>
+                <div className="ml-9 mt-3 max-w-[90%] bg-white rounded-2xl border border-blue-100 shadow-[0_8px_30px_rgb(0,102,204,0.08)] overflow-hidden">
+                  <div className="bg-gradient-to-r from-[#0066cc] to-[#0052a3] px-4 py-3 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-blue-100" />
+                      <span className="text-white text-sm font-semibold">Provide Details</span>
+                    </div>
                   </div>
-                  <div className="p-3.5 space-y-2.5">
+                  
+                  <div className="p-4 space-y-3 bg-blue-50/30">
                     {formFields.includes("name") && (
                       <input
                         type="text"
-                        placeholder="Name *"
+                        placeholder="Full Name *"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="w-full p-2.5 border-b-2 border-slate-200 text-sm focus:outline-none focus:border-[#0066cc] transition-colors bg-transparent"
+                        className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0066cc] focus:ring-1 focus:ring-[#0066cc] transition-all shadow-sm"
                       />
                     )}
                     {formFields.includes("email") && (
                       <input
                         type="email"
-                        placeholder="Email *"
+                        placeholder="Email Address *"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full p-2.5 border-b-2 border-slate-200 text-sm focus:outline-none focus:border-[#0066cc] transition-colors bg-transparent"
+                        className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0066cc] focus:ring-1 focus:ring-[#0066cc] transition-all shadow-sm"
                       />
                     )}
                     {formFields.includes("phone") && (
                       <input
                         type="tel"
-                        placeholder="Phone *"
+                        placeholder="Phone Number *"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        className="w-full p-2.5 border-b-2 border-slate-200 text-sm focus:outline-none focus:border-[#0066cc] transition-colors bg-transparent"
+                        className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0066cc] focus:ring-1 focus:ring-[#0066cc] transition-all shadow-sm"
                       />
                     )}
                     {formFields.includes("location") && (
                       <input
                         type="text"
-                        placeholder="Preferred location"
+                        placeholder="Location (Optional)"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
-                        className="w-full p-2.5 border-b-2 border-slate-200 text-sm focus:outline-none focus:border-[#0066cc] transition-colors bg-transparent"
+                        className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0066cc] focus:ring-1 focus:ring-[#0066cc] transition-all shadow-sm"
                       />
                     )}
                     {formFields.includes("message") && (
                       <textarea
-                        placeholder="Day pass, private office, dedicated desk..."
+                        placeholder="How can we help? (Optional)"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         rows={2}
-                        className="w-full p-2.5 border-b-2 border-slate-200 text-sm resize-none focus:outline-none focus:border-[#0066cc] transition-colors bg-transparent"
+                        className="w-full px-3 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-800 placeholder-slate-400 resize-none focus:outline-none focus:border-[#0066cc] focus:ring-1 focus:ring-[#0066cc] transition-all shadow-sm"
                       />
                     )}
                     <button
                       onClick={handleDemoSubmit}
-                      className="w-full bg-[#0066cc] hover:bg-[#0052a3] text-white text-sm font-bold py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2 mt-1"
+                      className="w-full mt-2 bg-gradient-to-r from-[#0066cc] to-[#0052a3] hover:from-[#0052a3] hover:to-[#004080] text-white text-sm font-semibold py-3 rounded-xl transition-all shadow-md shadow-blue-500/20 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98]"
                     >
-                      Request tour
+                      Submit Details
                       <ArrowUpRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -462,9 +496,10 @@ export default function WorkByHomeChatbot() {
           {isTyping && (
             <div className="flex justify-start">
               <div className="flex items-end gap-2">
-                <div className="w-7 h-7 rounded-full bg-[#0066cc] flex items-center justify-center flex-shrink-0">
-                  <Coffee className="w-3.5 h-3.5 text-white" />
-                </div>
+               <div className="w-8 h-8 rounded-full bg-[#0066cc] flex items-center justify-center flex-shrink-0 mb-1">
+                      {/* <Coffee className="w-3.5 h-3.5 text-white" /> */}
+                      <img src="/workbyhome.png" alt="WorkbyHome" className=" w-full h-full object-cover" />
+                    </div>
                 <div className="bg-white rounded-r-xl rounded-bl-xl border border-slate-200 px-4 py-3 shadow-sm">
                   <div className="flex gap-1">
                     <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
@@ -509,7 +544,7 @@ export default function WorkByHomeChatbot() {
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-              placeholder="Ask about locations, pricing..."
+              placeholder="Ask about voices, pricing, integrations..."
               className="flex-1 px-4 py-2.5 bg-slate-100 rounded-full text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0066cc]/25 transition-all"
             />
             <button
