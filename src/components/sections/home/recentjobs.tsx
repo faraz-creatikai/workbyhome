@@ -1,19 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { MapPin, SlidersHorizontal, X } from "lucide-react";
+import { SlidersHorizontal, Tag, Building2, GraduationCap, Shield, ShoppingCart, LucideIcon } from "lucide-react";
 import Link from "next/link";
 
 // ─── Types ──────────────────────────────────────────────────────────
-interface Job {
+interface Win {
   id: number;
   title: string;
-  company: string;
-  location: string;
-  experience: string;
-  postedDays: number;
-  logo: string;
-  logoBg: string;
+  industry: string;
+  detail: string;
+  icon: LucideIcon;
+  badgeBg: string;
+  hoursAgo: number;
   dots: number;
   dotsFilled: number;
 }
@@ -24,67 +23,67 @@ interface FilterOption {
 }
 
 // ─── Data ───────────────────────────────────────────────────────────
-const jobs: Job[] = [
+// Live activity feed — recent outcomes produced by the AI agents + calling
+// team, shown across the industries WorkByHome serves. Not a public job
+// board: no listings, no "apply", no location filter.
+const wins: Win[] = [
   {
     id: 1,
-    title: "Senior Software Engineer",
-    company: "Slack",
-    location: "London",
-    experience: "Experievel",
-    postedDays: 2,
-    logo: "S",
-    logoBg: "bg-[#4A154B]",
+    title: "2BHK Lead → Site Visit Booked",
+    industry: "Real Estate",
+    detail: "Qualified in 4 min",
+    icon: Building2,
+    badgeBg: "bg-blue-500",
+    hoursAgo: 3,
     dots: 9,
-    dotsFilled: 2,
+    dotsFilled: 7,
   },
   {
     id: 2,
-    title: "Senior Cashad Engineer",
-    company: "Slack",
-    location: "Marniraton",
-    experience: "12+ Level",
-    postedDays: 2,
-    logo: "S",
-    logoBg: "bg-[#4A154B]",
+    title: "Admission Enquiry → Call Booked",
+    industry: "Education",
+    detail: "Handed to counselor",
+    icon: GraduationCap,
+    badgeBg: "bg-emerald-500",
+    hoursAgo: 5,
     dots: 7,
-    dotsFilled: 3,
+    dotsFilled: 6,
   },
   {
     id: 3,
-    title: "Senior Software Engineer",
-    company: "Gmail",
-    location: "Hamington",
-    experience: "Bevormanco",
-    postedDays: 2,
-    logo: "M",
-    logoBg: "bg-gradient-to-br from-red-500 via-yellow-500 to-green-500",
+    title: "Policy Enquiry → Quote Sent",
+    industry: "Insurance",
+    detail: "Qualified & quoted",
+    icon: Shield,
+    badgeBg: "bg-violet-500",
+    hoursAgo: 1,
     dots: 12,
-    dotsFilled: 2,
+    dotsFilled: 9,
   },
   {
     id: 4,
-    title: "Senior Software Engineer",
-    company: "Slack",
-    location: "Sanjurahan",
-    experience: "1+ Experience",
-    postedDays: 2,
-    logo: "S",
-    logoBg: "bg-[#4A154B]",
+    title: "Cart Recovery → Order Confirmed",
+    industry: "E-commerce",
+    detail: "Follow-up call closed",
+    icon: ShoppingCart,
+    badgeBg: "bg-amber-500",
+    hoursAgo: 6,
     dots: 12,
-    dotsFilled: 2,
+    dotsFilled: 8,
   },
 ];
 
 const filterOptions: FilterOption[] = [
-  { label: "All Locations", value: "all" },
-  { label: "Remote", value: "remote" },
-  { label: "On-site", value: "onsite" },
-  { label: "Hybrid", value: "hybrid" },
+  { label: "All Industries", value: "all" },
+  { label: "Real Estate", value: "real-estate" },
+  { label: "Education", value: "education" },
+  { label: "Insurance", value: "insurance" },
+  { label: "E-commerce", value: "ecommerce" },
 ];
 
 // ─── Components ─────────────────────────────────────────────────────
 
-function FoldedCornerCard({ job }: { job: Job }) {
+function FoldedCornerCard({ win }: { win: Win }) {
   return (
     <div className="relative group">
       {/* Main Card */}
@@ -149,41 +148,33 @@ function FoldedCornerCard({ job }: { job: Job }) {
 
         {/* Card Content */}
         <div className="p-6 pr-14">
-          {/* Logo */}
+          {/* Industry badge */}
           <div
-            className={`w-10 h-10 rounded-lg ${job.logoBg} flex items-center justify-center text-white font-bold text-sm mb-4 shadow-sm`}
+            className={`w-10 h-10 rounded-lg ${win.badgeBg} flex items-center justify-center text-white mb-4 shadow-sm`}
           >
-            {job.logo === "M" ? (
-              <svg viewBox="0 0 24 24" className="w-6 h-6" fill="white">
-                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z" />
-              </svg>
-            ) : (
-              <svg viewBox="0 0 24 24" className="w-6 h-6" fill="white">
-                <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z" />
-              </svg>
-            )}
+            <win.icon className="w-5 h-5" />
           </div>
 
           {/* Title */}
           <h3 className="text-lg font-semibold text-gray-900 mb-2 leading-tight">
-            {job.title}
+            {win.title}
           </h3>
 
-          {/* Location & Experience */}
+          {/* Industry & Detail */}
           <div className="flex items-center gap-1.5 text-gray-500 text-sm mb-4">
-            <MapPin className="w-3.5 h-3.5" />
+            <Tag className="w-3.5 h-3.5" />
             <span>
-              {job.location} · {job.experience}
+              {win.industry} · {win.detail}
             </span>
           </div>
 
           {/* Dots Progress */}
           <div className="flex items-center gap-1.5 mb-4">
-            {Array.from({ length: job.dots }).map((_, i) => (
+            {Array.from({ length: win.dots }).map((_, i) => (
               <div
                 key={i}
                 className={`w-2 h-2 rounded-full transition-colors duration-200 ${
-                  i < job.dotsFilled
+                  i < win.dotsFilled
                     ? "bg-blue-400"
                     : "bg-gray-200"
                 }`}
@@ -194,72 +185,15 @@ function FoldedCornerCard({ job }: { job: Job }) {
           {/* Footer */}
           <div className="flex items-center justify-between pt-2">
             <span className="text-xs text-gray-400 font-medium">
-              time posted
+              converted
             </span>
             <span className="text-xs text-gray-500 font-medium">
-              {job.postedDays} days ago
+              {win.hoursAgo}h ago
             </span>
           </div>
         </div>
       </div>
     </div>
-  );
-}
-
-function Navbar() {
-  return (
-    <nav className="flex items-center justify-between px-8 py-4 bg-white">
-      {/* Logo */}
-      <div className="flex items-center gap-2.5">
-        <div className="grid grid-cols-2 gap-0.5">
-          <div className="w-2.5 h-2.5 rounded-sm bg-gray-900" />
-          <div className="w-2.5 h-2.5 rounded-sm bg-sky-400" />
-          <div className="w-2.5 h-2.5 rounded-sm bg-sky-400" />
-          <div className="w-2.5 h-2.5 rounded-sm bg-gray-900" />
-        </div>
-        <span className="text-lg font-semibold text-gray-900 tracking-tight">
-          ChronoTask
-        </span>
-      </div>
-
-      {/* Nav Links */}
-      <div className="hidden md:flex items-center gap-8">
-        <a
-          href="#"
-          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-        >
-          Features
-        </a>
-        <a
-          href="#"
-          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-        >
-          Solutions
-        </a>
-        <a
-          href="#"
-          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-        >
-          Resources
-        </a>
-        <a
-          href="#"
-          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-        >
-          Pricing
-        </a>
-      </div>
-
-      {/* Auth Buttons */}
-      <div className="flex items-center gap-3">
-        <button className="text-sm text-gray-600 hover:text-gray-900 transition-colors px-3 py-1.5">
-          Sign in
-        </button>
-        <button className="text-sm text-gray-700 border border-gray-300 rounded-lg px-4 py-2 hover:border-gray-400 hover:bg-gray-50 transition-all">
-          Get demo
-        </button>
-      </div>
-    </nav>
   );
 }
 
@@ -287,15 +221,12 @@ function FilterDropdown({
   );
 }
 
-// ─── Main Page ──────────────────────────────────────────────────────
+// ─── Main Section ───────────────────────────────────────────────────
 export default function RecentJobsPage() {
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#ffffff]">
-      {/* Navbar */}
-      
-
       {/* Main Content Area with subtle rounded container */}
       <div className="mx-4 mb-4">
         <div className="bg-[#f5f6f7] rounded-2xl border border-gray-100/50 relative overflow-hidden">
@@ -333,7 +264,7 @@ export default function RecentJobsPage() {
           <div className="relative z-10 py-12 px-8">
             {/* Heading */}
             <h1 className="text-3xl font-bold text-gray-900 text-center mb-6">
-              Recent Jobs
+              Recent Wins
             </h1>
 
             {/* Filters Button */}
@@ -353,15 +284,15 @@ export default function RecentJobsPage() {
 
             {/* Cards Grid */}
             <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-              {jobs.map((job) => (
-                <FoldedCornerCard key={job.id} job={job} />
+              {wins.map((win) => (
+                <FoldedCornerCard key={win.id} win={win} />
               ))}
             </div>
 
             {/* View All Button */}
             <div className="flex justify-center mt-10">
-            <Link href="/view-all-jobs">  <button className="px-8 py-3 cursor-pointer bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-xl shadow-md hover:shadow-lg transition-all duration-200 text-sm">
-                View All Jobs
+            <Link href="/resources/case-studies">  <button className="px-8 py-3 cursor-pointer bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-xl shadow-md hover:shadow-lg transition-all duration-200 text-sm">
+                View All Results
               </button></Link>
             </div>
           </div>
@@ -370,4 +301,3 @@ export default function RecentJobsPage() {
     </div>
   );
 }
-

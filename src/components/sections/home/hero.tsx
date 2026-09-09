@@ -35,13 +35,13 @@ import Link from "next/link";
           {/* Hero Typography */}
           <div className="text-center max-w-4xl mx-auto relative z-20">
             <h1 className="text-[2rem] sm:text-[3rem] lg:text-[4.5rem] leading-[1.05] font-semibold tracking-tight text-slate-900 mb-6">
-              Think, plan, and track <br />
-              <span className="text-gray-400">all in one place</span>
+              AI-powered leads. <br />
+              <span className="text-gray-400">Human-powered calls.</span>
             </h1>
             <p className="text-lg sm:text-xl text-gray-500 mb-10 max-w-2xl mx-auto font-medium">
-              Efficiently manage your tasks and boost productivity.
+              WorkByHome pairs AI agents with your calling team — automated lead capture, qualification, scripting, and CRM, so every call is ready to convert.
             </p>
-            <Link href="/apply-now" className="px-8 py-4 rounded-full bg-[#1A73E8] text-white text-lg font-medium hover:bg-blue-600 transition-all shadow-[0_10px_30px_-10px_rgba(26,115,232,0.5)] transform hover:-translate-y-0.5">
+            <Link href="/request-demo" className="px-8 py-4 rounded-full bg-[#1A73E8] text-white text-lg font-medium hover:bg-blue-600 transition-all shadow-[0_10px_30px_-10px_rgba(26,115,232,0.5)] transform hover:-translate-y-0.5">
               Get free demo
             </Link>
           </div>
@@ -61,7 +61,7 @@ import Link from "next/link";
               </div>
               {/* Note text */}
               <p className="text-slate-800 font-medium text-[15px] leading-snug mt-2" style={{ fontFamily: '"Comic Sans MS", cursive, sans-serif' }}>
-                Take notes to keep track of crucial details, and accomplish more tasks with ease.
+                AI drafts the script and key details for every call, so your team always knows exactly what to say.
               </p>
             </div>
   
@@ -83,14 +83,14 @@ import Link from "next/link";
              <div className="relative w-56 bg-white rounded-2xl shadow-[0_20px_40px_-10px_rgba(0,0,0,0.08)] p-5 border border-gray-50">
                <h3 className="font-semibold text-slate-900 mb-4">Reminders</h3>
                <div className="bg-blue-50/50 rounded-xl p-3 border border-blue-100/50">
-                  <p className="text-xs text-blue-500 font-medium mb-1">Meetings</p>
-                  <p className="text-sm font-semibold text-slate-800 mb-1">Today's Meeting</p>
-                  <p className="text-xs text-gray-400 mb-3">Call with marketing team</p>
+                  <p className="text-xs text-blue-500 font-medium mb-1">Calls</p>
+                  <p className="text-sm font-semibold text-slate-800 mb-1">Next Call</p>
+                  <p className="text-xs text-gray-400 mb-3">Follow-up — Real Estate Lead</p>
                   <div className="flex items-center gap-2 text-xs font-medium text-blue-600 bg-blue-100/50 w-max px-2 py-1 rounded-md">
                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    13:00 - 13:45
+                    13:00 - 13:15
                   </div>
                </div>
              </div>
@@ -106,13 +106,13 @@ import Link from "next/link";
              </div>
           </div>
   
-          {/* 3. Bottom Left: Today's Tasks */}
+          {/* 3. Bottom Left: Today's Calls */}
           <div className="absolute -bottom-8 left-[8%] lg:left-[15%] hidden lg:block z-20 -rotate-6 hover:rotate-0 transition-transform duration-500">
              <div className="relative w-72 bg-white rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.1)] p-6 border border-gray-100">
                {/* Folder Tab Detail */}
                <div className="absolute -top-4 left-6 w-24 h-6 bg-white rounded-t-xl border-t border-l border-r border-gray-100"></div>
                
-               <h3 className="font-semibold text-slate-900 mb-5 relative z-10">Today's tasks</h3>
+               <h3 className="font-semibold text-slate-900 mb-5 relative z-10">Today's calls</h3>
                
                <div className="space-y-4">
                  {/* Task Item */}
@@ -121,7 +121,7 @@ import Link from "next/link";
                      <div className="w-6 h-6 rounded-md bg-orange-100 flex items-center justify-center">
                        <div className="w-2 h-2 rounded-full bg-orange-500"></div>
                      </div>
-                     <span className="text-sm font-semibold text-slate-800">New Ideas for campaign</span>
+                     <span className="text-sm font-semibold text-slate-800">Real Estate Lead Follow-ups</span>
                    </div>
                    
                    <div className="flex items-center justify-between text-xs text-gray-500 mb-2">

@@ -1,7 +1,7 @@
 "use client"
 import { useState,useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Briefcase, Globe, Star, Users } from "lucide-react";
+import { Phone, Users, Building2, Star } from "lucide-react";
 import { Variants } from "framer-motion";
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -16,10 +16,10 @@ const fadeUp:Variants  = {
 };
 
 const stats = [
-  { icon: Briefcase, value: "2,500+", label: "Remote Jobs" },
-  { icon: Users, value: "150K+", label: "Job Seekers" },
-  { icon: Globe, value: "80+", label: "Countries" },
-  { icon: Star, value: "4.9", label: "Rating" },
+  { icon: Phone, value: "2M+", label: "AI-Assisted Calls" },
+  { icon: Users, value: "500K+", label: "Leads Qualified" },
+  { icon: Building2, value: "15+", label: "Industries Served" },
+  { icon: Star, value: "4.9", label: "Client Rating" },
 ];
 
 export default function StatsSection() {

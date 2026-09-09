@@ -19,7 +19,7 @@ export default function TestimonialsSection() {
           </div>
           <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 tracking-tight max-w-3xl leading-[1.15]">
             People just like you <br className="hidden md:block" />
-            are already using ChronoTask
+            are already using WorkByHome
           </h2>
         </div>
 
@@ -48,16 +48,16 @@ export default function TestimonialsSection() {
           <div className="flex flex-col gap-6 md:h-[640px] ">
             <Card
               flex="[7]"
-              quote="This task manager has completely transformed the way my team works. We now collaborate in real-time and always meet deadlines."
-              name="John D."
-              role="Marketing Lead"
+              quote="WorkByHome's AI qualifies every lead before our team even picks up the phone. Our calling team closes more deals with way less wasted time."
+              name="Rohit Verma"
+              role="Real Estate Agency Owner"
               avatar="https://i.pravatar.cc/150?img=11"
             />
             <Card
               flex="[3]"
-              quote="I love how easy it is to create and assign tasks. The platform's interface makes work feel less overwhelming."
-              name="Daniela T."
-              role="Operations Manager"
+              quote="Every lead, every call, every outcome — logged automatically. Reporting used to take me hours; now it's instant."
+              name="Anita Sharma"
+              role="Operations Manager, EduBridge"
               avatar="https://i.pravatar.cc/150?img=47"
             />
           </div>
@@ -66,16 +66,16 @@ export default function TestimonialsSection() {
           <div className="flex flex-col gap-6 md:h-[640px]">
             <Card
               flex="[3]"
-              quote="An essential tool for anyone looking to manage their tasks better."
-              name="Sarah W."
-              role="Freelance Designer"
+              quote="An essential tool for any calling team that wants to convert more leads."
+              name="Karan Mehta"
+              role="Insurance Broker"
               avatar="https://i.pravatar.cc/150?img=5"
             />
             <Card
               flex="[7]"
-              quote="The time-tracking feature has been a game-changer for my freelance projects. It helps me stay organized and productive."
-              name="Alex M."
-              role="Freelance Developer"
+              quote="The AI hands me a fully-qualified lead with all the context I need — I just make the call. It's completely changed how productive I am."
+              name="Priya Nair"
+              role="Senior Calling Agent, WorkByHome"
               avatar="https://i.pravatar.cc/150?img=33"
             />
           </div>
@@ -84,9 +84,9 @@ export default function TestimonialsSection() {
           <div className="flex flex-col gap-6 md:h-[640px]">
             <Card
               flex="[3]"
-              quote="The built-in analytics give me a complete overview of our team's productivity."
-              name="Sam J."
-              role="Project Coordinator"
+              quote="The built-in analytics give me a complete view of our lead funnel and call outcomes."
+              name="Farhan Ali"
+              role="E-commerce Growth Lead"
               avatar="https://i.pravatar.cc/150?img=59"
             />
 
@@ -94,7 +94,7 @@ export default function TestimonialsSection() {
             <div className="flex-[7] relative rounded-3xl overflow-hidden bg-gray-900 shadow-2xl shadow-neutral-800">
               <img
                 src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                alt="Video review by a user"
+                alt="Video review by a WorkByHome client"
                 className="absolute inset-0 w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />

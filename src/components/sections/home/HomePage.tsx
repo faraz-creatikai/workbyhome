@@ -7,7 +7,7 @@ import StatsSection from "@/components/sections/home/stats";
 import TestimonialsSection from "@/components/sections/home/testimonials";
 import Image from "next/image";
 
-export default function HomePage() {
+export default function Home() {
   return (
    <div>
     <HeroSection/>

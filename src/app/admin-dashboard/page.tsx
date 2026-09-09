@@ -547,7 +547,7 @@ export default function SEODashboard() {
     { id: 'requirement', icon: Users, label: 'Added Requirements' }, */
     
 
-    { id: 'settings', icon: Settings, label: 'Settings' },
+   /*  { id: 'settings', icon: Settings, label: 'Settings' }, */
   ];
 
   const SidebarNav = ({ onItemClick }: { onItemClick?: () => void }) => (

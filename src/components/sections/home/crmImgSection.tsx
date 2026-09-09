@@ -84,24 +84,24 @@ const scaleIn = {
   visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
 };
 
-// ─── Mock Dashboard Data ───
+// ─── Mock CRM Data ───
 const todoItems = [
-  { id: 1, text: "Send wireframes to development team", done: true },
-  { id: 2, text: "Review Q3 marketing campaign", done: true },
-  { id: 3, text: "Update project timeline for client", done: false },
-  { id: 4, text: "Prepare presentation for stakeholders", done: false },
+  { id: 1, text: "Call Rohan S. — Real Estate lead", done: true },
+  { id: 2, text: "Follow up: Priya M. — Insurance lead", done: true },
+  { id: 3, text: "Callback: Arjun K. — Education lead", done: false },
+  { id: 4, text: "Send quote to Meera T. — Insurance lead", done: false },
 ];
 
 const assignedTasks = [
-  { id: 1, title: "New Website Redesign", progress: 75, color: "#0EA5E9", members: 3 },
-  { id: 2, title: "Mobile App Development", progress: 45, color: "#F97316", members: 5 },
-  { id: 3, title: "Brand Identity Update", progress: 90, color: "#22C55E", members: 2 },
+  { id: 1, title: "Real Estate Outreach", progress: 75, color: "#0EA5E9", members: 3 },
+  { id: 2, title: "Education Enrollment Drive", progress: 45, color: "#F97316", members: 5 },
+  { id: 3, title: "Insurance Renewal Calls", progress: 90, color: "#22C55E", members: 2 },
 ];
 
 const sidebarItems = [
   { icon: LayoutGrid, label: "Dashboard", active: true },
-  { icon: FolderOpen, label: "Projects" },
-  { icon: CheckCircle2, label: "Tasks" },
+  { icon: FolderOpen, label: "Leads" },
+  { icon: CheckCircle2, label: "Calls" },
   { icon: Calendar, label: "Calendar" },
   { icon: BarChart3, label: "Reports" },
   { icon: Users, label: "Team" },
@@ -129,7 +129,7 @@ function Sidebar() {
         <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0EA5E9] to-[#06B6D4] flex items-center justify-center">
           <Zap className="w-4 h-4 text-white" />
         </div>
-        <span className="font-bold text-[#0F172A] text-sm tracking-tight">ChronoTask</span>
+        <span className="font-bold text-[#0F172A] text-sm tracking-tight">WorkByHome</span>
       </div>
 
       {/* Create Button */}
@@ -142,14 +142,14 @@ function Sidebar() {
 
     
 
-      {/* Projects Section */}
+      {/* Campaigns Section */}
       <div className="px-4 py-3">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-[10px] font-semibold text-[#94A3B8] uppercase tracking-wider">Projects</span>
+          <span className="text-[10px] font-semibold text-[#94A3B8] uppercase tracking-wider">Campaigns</span>
           <Plus className="w-3 h-3 text-[#94A3B8]" />
         </div>
         <div className="space-y-1">
-          {["Marketing", "Development", "Design System"].map((proj, i) => (
+          {["Real Estate", "Education", "Insurance"].map((proj, i) => (
             <div key={i} className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-[#F8FAFC] cursor-pointer">
               <div className={`w-2 h-2 rounded-full ${i === 0 ? "bg-[#0EA5E9]" : i === 1 ? "bg-[#F97316]" : "bg-[#8B5CF6]"}`} />
               <span className="text-xs text-[#475569]">{proj}</span>
@@ -166,7 +166,7 @@ function Sidebar() {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-xs font-medium text-[#0F172A] truncate">Amanda K.</p>
-            <p className="text-[10px] text-[#94A3B8]">Pro Plan</p>
+            <p className="text-[10px] text-[#94A3B8]">Team Lead</p>
           </div>
           <Settings className="w-3.5 h-3.5 text-[#94A3B8]" />
         </div>
@@ -206,15 +206,15 @@ function DashboardMock() {
         {/* Greeting */}
         <div className="mb-5">
           <h2 className="text-xl font-bold text-[#0F172A]">Good morning, Amanda</h2>
-          <p className="text-xs text-[#94A3B8] mt-0.5">You have 4 tasks pending for today</p>
+          <p className="text-xs text-[#94A3B8] mt-0.5">You have 4 calls pending for today</p>
         </div>
 
         {/* Top Row */}
         <div className="grid grid-cols-3 gap-4 mb-4">
-          {/* To-Do List */}
+          {/* Today's Calls */}
           <div className="bg-white rounded-2xl p-4 border border-[#E2E8F0]">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-xs font-semibold text-[#0F172A]">To-do list</h3>
+              <h3 className="text-xs font-semibold text-[#0F172A]">Today's calls</h3>
               <MoreHorizontal className="w-3.5 h-3.5 text-[#94A3B8]" />
             </div>
             <div className="space-y-2">
@@ -235,19 +235,19 @@ function DashboardMock() {
             </div>
             <button className="mt-3 flex items-center gap-1 text-[10px] text-[#0EA5E9] font-medium hover:underline">
               <Plus className="w-3 h-3" />
-              Add new task
+              Add new call
             </button>
           </div>
 
-          {/* Time Tracker */}
+          {/* Call Time */}
           <div className="bg-white rounded-2xl p-4 border border-[#E2E8F0]">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-xs font-semibold text-[#0F172A]">Time tracker</h3>
+              <h3 className="text-xs font-semibold text-[#0F172A]">Call time</h3>
               <MoreHorizontal className="w-3.5 h-3.5 text-[#94A3B8]" />
             </div>
             <div className="text-center py-2">
               <div className="text-2xl font-bold text-[#0F172A] font-mono tracking-tight">04:21:58</div>
-              <p className="text-[10px] text-[#94A3B8] mt-1">Today&apos;s tracked time</p>
+              <p className="text-[10px] text-[#94A3B8] mt-1">Time on calls today</p>
             </div>
             <div className="flex items-center justify-center gap-2 mt-3">
               <button className="w-8 h-8 rounded-full bg-[#FEE2E2] flex items-center justify-center hover:bg-[#FECACA] transition-colors">
@@ -296,11 +296,11 @@ function DashboardMock() {
             </div>
             <div className="flex justify-between mt-2 px-2">
               <div className="text-center">
-                <p className="text-[10px] text-[#94A3B8]">Completed</p>
+                <p className="text-[10px] text-[#94A3B8]">Calls Made</p>
                 <p className="text-sm font-bold text-[#0EA5E9]">29/40</p>
               </div>
               <div className="text-center">
-                <p className="text-[10px] text-[#94A3B8]">In Progress</p>
+                <p className="text-[10px] text-[#94A3B8]">Follow-ups</p>
                 <p className="text-sm font-bold text-[#FBBF24]">8/17</p>
               </div>
             </div>
@@ -309,10 +309,10 @@ function DashboardMock() {
 
         {/* Bottom Row */}
         <div className="grid grid-cols-2 gap-4">
-          {/* Tasks Assigned */}
+          {/* Campaigns */}
           <div className="bg-white rounded-2xl p-4 border border-[#E2E8F0]">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-xs font-semibold text-[#0F172A]">Tasks I&apos;ve assigned</h3>
+              <h3 className="text-xs font-semibold text-[#0F172A]">Campaigns I&apos;m running</h3>
               <MoreHorizontal className="w-3.5 h-3.5 text-[#94A3B8]" />
             </div>
             <div className="space-y-3">
@@ -363,8 +363,8 @@ function DashboardMock() {
                   <Bell className="w-4 h-4 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[11px] font-medium text-[#92400E]">Team meeting at 2:00 PM</p>
-                  <p className="text-[10px] text-[#B45309]">Don&apos;t forget to prepare slides</p>
+                  <p className="text-[11px] font-medium text-[#92400E]">Callback due at 2:00 PM</p>
+                  <p className="text-[10px] text-[#B45309]">Follow up with Rohan S. — Real Estate</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-2.5 rounded-xl bg-[#F0FDF4] border border-[#BBF7D0]">
@@ -372,7 +372,7 @@ function DashboardMock() {
                   <Check className="w-4 h-4 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[11px] font-medium text-[#166534]">Submit weekly report</p>
+                  <p className="text-[11px] font-medium text-[#166534]">Submit call report</p>
                   <p className="text-[10px] text-[#15803D]">Due by end of day</p>
                 </div>
               </div>
@@ -399,7 +399,7 @@ function FloatingElements() {
             <span className="text-white font-bold text-sm">20</span>
           </div>
           <div>
-            <p className="text-[10px] font-semibold text-[#0F172A]">Tasks Done</p>
+            <p className="text-[10px] font-semibold text-[#0F172A]">Calls Made</p>
             <p className="text-[9px] text-[#22C55E] font-medium">+12% this week</p>
           </div>
         </div>
@@ -489,10 +489,10 @@ function MiniBarChart() {
 function MiniCalendar() {
   const days = ["M", "T", "W", "T", "F", "S", "S"];
   const events = [
-    { day: 0, color: "#0EA5E9", label: "Standup" },
-    { day: 1, color: "#F97316", label: "Review" },
-    { day: 3, color: "#22C55E", label: "Deploy" },
-    { day: 4, color: "#8B5CF6", label: "Retro" },
+    { day: 0, color: "#0EA5E9", label: "Team Sync" },
+    { day: 1, color: "#F97316", label: "Lead Review" },
+    { day: 3, color: "#22C55E", label: "Campaign Launch" },
+    { day: 4, color: "#8B5CF6", label: "Weekly Retro" },
   ];
   return (
     <div className="p-4">
@@ -556,7 +556,7 @@ function MiniTimeline() {
   return (
     <div className="p-4">
       <div className="flex items-center gap-2 mb-3">
-        <span className="text-[10px] font-semibold text-[#0F172A]">Project timeline</span>
+        <span className="text-[10px] font-semibold text-[#0F172A]">Campaign timeline</span>
         <div className="flex -space-x-1 ml-auto">
           {[0, 1, 2].map((i) => (
             <div key={i} className="w-4 h-4 rounded-full border border-white flex items-center justify-center text-[7px] font-bold text-white"
@@ -588,13 +588,13 @@ function MiniTimeline() {
 
 function MiniTaskBoard() {
   const cols = [
-    { title: "To Do", color: "#94A3B8", items: ["Research", "Planning"] },
-    { title: "In Progress", color: "#0EA5E9", items: ["Design", "Development"] },
-    { title: "Done", color: "#22C55E", items: ["Review"] },
+    { title: "New Leads", color: "#94A3B8", items: ["Website form", "WhatsApp"] },
+    { title: "Calling", color: "#0EA5E9", items: ["Rohan S.", "Priya M."] },
+    { title: "Converted", color: "#22C55E", items: ["Arjun K."] },
   ];
   return (
     <div className="p-4">
-      <p className="text-[10px] font-semibold text-[#0F172A] mb-2">Tasks</p>
+      <p className="text-[10px] font-semibold text-[#0F172A] mb-2">Leads</p>
       <div className="flex gap-2">
         {cols.map((col, i) => (
           <div key={i} className="flex-1">
@@ -626,12 +626,12 @@ function MiniWorkspace() {
         <div className="bg-[#FEF3C7] rounded-xl p-2 border border-[#FDE68A]">
           <Clock className="w-3 h-3 text-[#F59E0B] mb-1" />
           <p className="text-[9px] font-bold text-[#92400E]">04:21</p>
-          <p className="text-[7px] text-[#B45309]">Time tracked</p>
+          <p className="text-[7px] text-[#B45309]">Call time</p>
         </div>
         <div className="bg-[#F0FDF4] rounded-xl p-2 border border-[#BBF7D0]">
           <CheckCircle2 className="w-3 h-3 text-[#22C55E] mb-1" />
           <p className="text-[9px] font-bold text-[#166534]">12/15</p>
-          <p className="text-[7px] text-[#15803D]">Done today</p>
+          <p className="text-[7px] text-[#15803D]">Calls today</p>
         </div>
       </div>
     </div>
@@ -658,7 +658,7 @@ export default function CrmImagePage() {
           >
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#E2E8F0] text-[11px] font-medium text-[#64748B] shadow-sm">
               <Zap className="w-3 h-3 text-[#0EA5E9]" />
-              Solutions
+              Our CRM
             </span>
           </motion.div>
 
@@ -670,9 +670,9 @@ export default function CrmImagePage() {
             className="text-center mb-12"
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-blue-700 leading-tight tracking-tight">
-              Solve your team&apos;s
+              One CRM for your
               <br />
-              biggest challenges
+              entire calling team
             </h1>
           </motion.div>
 
@@ -686,15 +686,15 @@ export default function CrmImagePage() {
             {[
               {
                 icon: Target,
-                title: "Ensure your team's always on the same page with task sharing and transparent updates.",
+                title: "Keep every lead's status visible so your whole calling team stays in sync.",
               },
               {
                 icon: LayoutGrid,
-                title: "Prioritize and manage tasks effectively so your team can focus on what matters most.",
+                title: "Prioritize leads by qualification score so your team calls the right people first.",
               },
               {
                 icon: Users,
-                title: "Hold everyone accountable without the need for constant check-ins.",
+                title: "Track every call and outcome automatically — no manual reporting needed.",
               },
             ].map((item, i) => (
               <div key={i} className="flex flex-col items-center text-center">
@@ -756,7 +756,7 @@ export default function CrmImagePage() {
             className="text-center mb-3"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-blue-700 tracking-tight">
-              Keep everything in one place
+              Keep every lead in one place
             </h2>
           </motion.div>
 
@@ -768,7 +768,7 @@ export default function CrmImagePage() {
             viewport={{ once: true }}
             className="text-center text-sm text-[#64748B] mb-12 max-w-md mx-auto"
           >
-            Forget complex project management tools.
+            Forget juggling spreadsheets, WhatsApp, and sticky notes.
           </motion.p>
 
           {/* Features Grid */}
@@ -777,7 +777,7 @@ export default function CrmImagePage() {
             <FeatureCard
               icon={Users}
               title="Seamless Collaboration"
-              description="Work together with your team effortlessly. Share tasks, and update progress in real-time."
+              description="Work together with your calling team effortlessly. Share leads, and update outcomes in real-time."
               badge="Popular"
               badgeColor="#0EA5E9"
               delay={0}
@@ -787,13 +787,13 @@ export default function CrmImagePage() {
                     <div className="w-6 h-6 rounded-lg bg-[#0EA5E9]/10 flex items-center justify-center">
                       <Users className="w-3 h-3 text-[#0EA5E9]" />
                     </div>
-                    <span className="text-[10px] font-semibold text-[#0F172A]">Team workspace</span>
+                    <span className="text-[10px] font-semibold text-[#0F172A]">Calling team</span>
                   </div>
                   <div className="space-y-2">
                     {[
-                      { name: "Amanda K.", role: "Product Designer", color: "#0EA5E9" },
-                      { name: "John D.", role: "Developer", color: "#F97316" },
-                      { name: "Sarah M.", role: "Project Manager", color: "#22C55E" },
+                      { name: "Amanda K.", role: "Team Lead", color: "#0EA5E9" },
+                      { name: "John D.", role: "Senior Caller", color: "#F97316" },
+                      { name: "Sarah M.", role: "Lead Qualifier", color: "#22C55E" },
                     ].map((member, i) => (
                       <div key={i} className="flex items-center gap-2.5 p-2 rounded-xl bg-white border border-[#E2E8F0]">
                         <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[9px] font-bold" style={{ backgroundColor: member.color }}>
@@ -815,7 +815,7 @@ export default function CrmImagePage() {
             <FeatureCard
               icon={Clock}
               title="Time Management Tools"
-              description="Optimize your time with integrated tools like timers, reminders, and schedules."
+              description="Optimize your day with integrated call timers, reminders, and schedules."
               badge="New"
               badgeColor="#22C55E"
               delay={1}
@@ -829,11 +829,11 @@ export default function CrmImagePage() {
               }
             />
 
-            {/* Card 3: Advanced Task Tracking */}
+            {/* Card 3: Advanced Call Tracking */}
             <FeatureCard
               icon={BarChart3}
-              title="Advanced task tracking"
-              description="A birds-eye view of your entire workflow and track productivity."
+              title="Advanced call tracking"
+              description="A bird's-eye view of every call and lead, so you always know where things stand."
               delay={2}
               image={
                 <div className="grid grid-cols-2">
@@ -849,7 +849,7 @@ export default function CrmImagePage() {
             <FeatureCard
               icon={LayoutGrid}
               title="Customizable Workspaces"
-              description="Tailor your workspace to fit your unique workflow and preferences."
+              description="Tailor your dashboard to match how your calling team actually works."
               delay={3}
               image={<MiniWorkspace />}
             />
@@ -858,7 +858,7 @@ export default function CrmImagePage() {
             <FeatureCard
               icon={PieChart}
               title="Analytics & Insights"
-              description="Get detailed reports and analytics to make data-driven decisions."
+              description="Get detailed reports on call volume, conversion, and lead quality to make data-driven decisions."
               delay={4}
               image={<MiniBarChart />}
             />
@@ -867,7 +867,7 @@ export default function CrmImagePage() {
             <FeatureCard
               icon={Zap}
               title="Smart Automation"
-              description="Automate repetitive tasks and focus on what truly matters."
+              description="Let AI agents handle repetitive follow-ups so your team can focus on closing."
               badge="AI"
               badgeColor="#8B5CF6"
               delay={5}
@@ -877,13 +877,13 @@ export default function CrmImagePage() {
                     <div className="w-6 h-6 rounded-lg bg-[#8B5CF6]/10 flex items-center justify-center">
                       <Zap className="w-3 h-3 text-[#8B5CF6]" />
                     </div>
-                    <span className="text-[10px] font-semibold text-[#0F172A]">Auto-assign rules</span>
+                    <span className="text-[10px] font-semibold text-[#0F172A]">Smart routing rules</span>
                   </div>
                   <div className="space-y-2">
                     {[
-                      { label: "New bug → Dev team", active: true },
-                      { label: "Design task → Design", active: true },
-                      { label: "Urgent → Priority", active: false },
+                      { label: "New lead → Qualification Agent", active: true },
+                      { label: "Qualified → Calling queue", active: true },
+                      { label: "No answer 3x → Re-engagement", active: false },
                     ].map((rule, i) => (
                       <div key={i} className="flex items-center justify-between p-2 rounded-xl bg-white border border-[#E2E8F0]">
                         <span className="text-[9px] text-[#475569]">{rule.label}</span>

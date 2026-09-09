@@ -1,78 +1,59 @@
 import React from 'react';
-import { BsChatSquareDots } from 'react-icons/bs';
-import { FcClapperboard, FcOvertime, FcPlanner } from 'react-icons/fc';
 
 export default function PricingPage() {
   const plans = [
     {
-      name: 'Basic plan',
-      subtitle: 'Perfect for individuals.',
+      name: 'Starter plan',
+      subtitle: 'Perfect for solo agents & small teams.',
       price: '$5',
       period: '/mo',
-      buttonText: 'Get started',
+      buttonText: 'Get Started',
       buttonStyle: 'bg-[#1E88E5] text-white',
       features: [
-        'All product features',
-        'Unlimited lists & tasks',
-        'Priority support',
-        'Unlimited tasks',
-        'Unlimited file storage',
-        'Unlimited projects',
+        'Up to 3 calling team seats',
+        'AI Lead Capture Agent',
+        'AI Qualification Agent',
+        'Basic CRM & call logging',
+        '1,000 leads/mo',
+        'Email support',
       ],
       isPopular: false,
     },
     {
-      name: 'Pro plan',
-      subtitle: 'Ideal for small teams.',
+      name: 'Growth plan',
+      subtitle: 'Ideal for growing calling teams.',
       price: '$9',
       period: '/mo',
-      buttonText: 'Get started',
+      buttonText: 'Get Started',
       buttonStyle: 'bg-white text-[#1E88E5]',
       features: [
-        'All product features',
-        'Unlimited lists & tasks',
+        'Up to 15 calling team seats',
+        'All AI Agents (Calling, Campaign, Data Mining & more)',
+        'Full CRM with campaign automation',
+        'WhatsApp, Email & SMS integrations',
+        '10,000 leads/mo',
         'Priority support',
-        'Unlimited tasks',
-        'Unlimited file storage',
-        'Unlimited projects',
       ],
       isPopular: true,
-      badge: 'Best choice',
+      badge: 'Most popular',
     },
     {
-      name: 'Advanced plan',
-      subtitle: 'Best for large organizations.',
+      name: 'Enterprise plan',
+      subtitle: 'Best for large calling operations.',
       price: '$15',
       period: '/mo',
-      buttonText: 'Get started',
+      buttonText: 'Contact Sales',
       buttonStyle: 'bg-[#1E88E5] text-white',
       features: [
-        'All product features',
-        'Unlimited lists & tasks',
-        'Priority support',
-        'Unlimited tasks',
-        'Unlimited file storage',
-        'Unlimited projects',
+        'Unlimited calling team seats',
+        'Custom AI agent workflows',
+        'Dedicated CRM instance',
+        'Advanced analytics & reporting',
+        'Unlimited leads',
+        'Dedicated account manager',
       ],
       isPopular: false,
     },
-  ];
-
-  const footerLinks = {
-    left: ['About Us', 'Contact', "What's New", 'Careers'],
-    right: ['Product', 'Solutions', 'Integrations', 'Price'],
-  };
-
-  const floatingIcons = [
-    { icon: <BsChatSquareDots />, top: '28%', left: '8%', rotate: '-12deg', size: 'w-14 h-14' },
-    { icon: '20', top: '18%', left: '22%', rotate: '8deg', size: 'w-16 h-16', isNumber: true },
-    { icon: '✓', top: '55%', left: '15%', rotate: '-6deg', size: 'w-14 h-14', isCheck: true },
-    { icon: '⚡', top: '38%', left: '38%', rotate: '12deg', size: 'w-14 h-14' },
-    { icon: '📅', top: '15%', left: '65%', rotate: '-4deg', size: 'w-14 h-14' },
-    { icon: '⏱', top: '52%', left: '72%', rotate: '6deg', size: 'w-14 h-14' },
-    { icon: '💡', top: '18%', left: '85%', rotate: '-8deg', size: 'w-14 h-14' },
-    { icon: '≫', top: '55%', left: '88%', rotate: '4deg', size: 'w-14 h-14', isArrow: true },
-    { icon: '⧗', top: '45%', left: '55%', rotate: '-10deg', size: 'w-12 h-12', isHourglass: true },
   ];
 
   return (
@@ -88,7 +69,7 @@ export default function PricingPage() {
 
         {/* Section Title */}
         <h2 className="text-center text-3xl sm:text-4xl font-semibold text-gray-900 mb-12">
-          Simple pricing plans
+          Pricing that scales with your calling team
         </h2>
 
         {/* Pricing Cards */}
@@ -169,4 +150,3 @@ export default function PricingPage() {
     </div>
   );
 }
-
